@@ -92,6 +92,8 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 - Si rechaza: regenerar otra gráfica o ajustar parámetros. 
 - Documentar para que otros puedan usar la herramienta.
 
+---
+
 ## Preguntas
 
 - ¿La gente rellenará un formulario web, un google forms o mandarán un correo?

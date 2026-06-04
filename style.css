@@ -1,0 +1,430 @@
+/*  =============================================
+       FUENTES
+       Cargadas desde la carpeta /fonts/
+       - WorkFaAAD-A/B : títulos (display)
+       - WorkSans      : cuerpo de texto
+       - NectoMono     : etiquetas técnicas, siempre en MAYÚSCULAS
+  ============================================= */
+
+@font-face {
+    font-family: 'WorkFaAAD';
+    src: url('fonts/WorkFaAAD-A.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WorkFaAAD';
+    src: url('fonts/WorkFaAAD-B.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WorkSans';
+    src: url('fonts/WorkSans-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NectoMono';
+    src: url('fonts/NectoMono-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* =============================================
+       VARIABLES DE IDENTIDAD FaAAD
+       Paleta extraída del manual de estilo v1.1
+    ============================================= */
+:root {
+    /* Tipografías */
+    --font-display: 'WorkFaAAD', serif;
+    --font-body: 'WorkSans', sans-serif;
+    --font-mono: 'NectoMono', monospace;
+
+    /* Colores institucionales */
+    --color-negro: #000000;
+    --color-blanco: #ffffff;
+    --color-rojo: #d12e1c;
+    /* Pantone 485 C  — solo texto blanco */
+    --color-verde-osc: #3b7359;
+    /* Pantone 555 C  — solo texto blanco */
+    --color-azul: #335c96;
+    /* Pantone 647 C  — solo texto blanco */
+    --color-verde-cla: #91dba6;
+    /* Pantone 359 C  — solo texto negro  */
+    --color-amarillo: #edd121;
+    /* Pantone 116 C  — solo texto negro  */
+    --color-azul-gris: #99b0c9;
+    /* Pantone 644 C  — solo texto negro  */
+
+    /* Dimensiones del canvas — formato Instagram portrait 4:5 */
+    --slide-w: 1080px;
+    --slide-h: 1350px;
+
+    /* Escala de visualización en pantalla (el canvas real es 1080×1350) */
+    --preview-scale: 0.37;
+
+    /* Espaciado interno del slide */
+    --padding: 72px;
+}
+
+/* =============================================
+       RESET Y BASE
+    ============================================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #111;
+    font-family: var(--font-body);
+    color: var(--color-blanco);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px;
+    gap: 40px;
+}
+
+/* =============================================
+       CONTROLES (panel de edición)
+    ============================================= */
+.controles {
+    width: 100%;
+    max-width: 960px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 32px;
+}
+
+.controles h2 {
+    grid-column: 1 / -1;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #333;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: var(--color-blanco);
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+    border-color: #666;
+}
+
+.campo textarea {
+    min-height: 80px;
+}
+
+.campo--full {
+    grid-column: 1 / -1;
+}
+
+/* =============================================
+       NAVEGACIÓN DE SLIDES
+    ============================================= */
+.nav-slides {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.nav-slides button {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #aaa;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nav-slides button.activo {
+    background: var(--color-blanco);
+    color: var(--color-negro);
+    border-color: var(--color-blanco);
+}
+
+.nav-slides button:hover:not(.activo) {
+    border-color: #666;
+    color: var(--color-blanco);
+}
+
+/* =============================================
+       CONTENEDOR DE PREVIEW
+       El canvas real es 1080×1350px, escalado al
+       preview-scale para que quepa en pantalla.
+    ============================================= */
+.preview-wrapper {
+    position: relative;
+    width: calc(var(--slide-w) * var(--preview-scale));
+    height: calc(var(--slide-h) * var(--preview-scale));
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px #333;
+}
+
+/* =============================================
+       EL SLIDE — canvas escalado
+    ============================================= */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--slide-w);
+    height: var(--slide-h);
+    transform-origin: top left;
+    transform: scale(var(--preview-scale));
+    overflow: hidden;
+    display: none;
+    /* cada slide se muestra individualmente */
+}
+
+.slide.visible {
+    display: flex;
+}
+
+/* =============================================
+       SLIDE 1 — Título + participantes + imagen fondo
+    ============================================= */
+#slide-1 {
+    background: var(--color-negro);
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--padding);
+    position: relative;
+}
+
+#slide-1 .fondo {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    /* La imagen se setea por JS */
+}
+
+/* Overlay oscuro sobre la imagen de fondo */
+#slide-1 .fondo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.25) 0%,
+            rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Todo el texto debe quedar encima del overlay */
+#slide-1>*:not(.fondo) {
+    position: relative;
+    z-index: 1;
+}
+
+#slide-1 .tipo-evento {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blanco);
+}
+
+#slide-1 .titulo {
+    font-family: var(--font-display);
+    font-size: 144px;
+    line-height: 1.0;
+    color: var(--color-blanco);
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 32px;
+    word-break: break-word;
+}
+
+#slide-1 .participantes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#slide-1 .participantes .label {
+    font-family: var(--font-body);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--color-blanco);
+    opacity: 0.85;
+}
+
+#slide-1 .participantes .nombres {
+    font-family: var(--font-body);
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--color-blanco);
+}
+
+#slide-1 .pie {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 36px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+#slide-1 .pie .lockup svg {
+    height: 32px;
+    width: auto;
+    fill: var(--color-blanco);
+}
+
+#slide-1 .pie .escuela {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--color-blanco);
+}
+
+/* =============================================
+       SLIDE 2 — Descripción + datos logísticos
+    ============================================= */
+#slide-2 {
+    background: var(--color-negro);
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--padding);
+}
+
+#slide-2 .tipo-evento {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blanco);
+}
+
+#slide-2 .descripcion {
+    font-family: var(--font-body);
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--color-blanco);
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+#slide-2 .datos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#slide-2 .datos p {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blanco);
+    line-height: 1.4;
+}
+
+#slide-2 .hora {
+    display: flex;
+    gap: 0.5em;
+}
+#slide-2 .hora p {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blanco);
+    line-height: 1.4;
+}
+
+/* =============================================
+       SLIDE 3 — Logo FaAAD centrado
+    ============================================= */
+#slide-3 {
+    background: var(--color-negro);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: var(--padding);
+}
+
+#slide-3 .logo-bloque {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#slide-3 .logo-bloque svg {
+    width: 480px;
+    height: auto;
+    fill: var(--color-blanco);
+}
+
+/* =============================================
+       BOTÓN DE EXPORTAR
+    ============================================= */
+.btn-exportar {
+    background: var(--color-blanco);
+    color: var(--color-negro);
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-exportar:hover {
+    opacity: 0.8;
+}
