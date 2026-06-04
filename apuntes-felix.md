@@ -100,3 +100,19 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 - ¿Puedo acceder a los datos o al menos a los campos que pide?
 - ¿Qué información deben ir en las gráficas?
 - ¿La idea es que sea una publicación tipo carrusel o sólo una imagen?
+
+## Comentarios y recomendaciones
+
+- Tamaño: 1020x1350px (tamaño recomendado para Instagram) 
+- A veces puede ser sólo una imagen, sin el título ni el logo
+    - Criterios para la imagen:
+        - Colores
+        - Brillo
+        - Calidad
+        - Composición (minimalista y monocompuesta)
+        - Objeto en el centro
+- En el formulario se envían más de una imagen
+- Qué pasa con los videos. Muy bonito sería en la portada. Al recibir el video, la herramienta lo transforma a formato instagram y lo exporta en .mp3 en la carpeta de Google Drive
+- Enviar las fotos a wsp con un bot puede ser un enlace para ver las imagenes, selecionar el orden y las suba automáticamente
+- Para revisión y aprobación rápida que envíe un link a wsp donde se selecciona la imagen de portada y las demás imágenes del carrusel, y luego se suba automáticamente a Instagram.
+- Si el texto estaba alineado a la izquierda en la publicación anterior, debería estar 
