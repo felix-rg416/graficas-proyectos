@@ -11,7 +11,6 @@ Herramienta de automatización de gráficas para proyectos.
 
 ## Índice
 
-- [Flujo](#flujo)
 - [Herramientas recomendadas](#herramientas-recomendadas)
 - [Fases](#fases)
     - [Fase 1: Datos de entrada](#fase-1-datos-de-entrada)
@@ -103,16 +102,23 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 
 ## Comentarios y recomendaciones
 
+### 01
+
 - Tamaño: 1020x1350px (tamaño recomendado para Instagram) 
 - A veces puede ser sólo una imagen, sin el título ni el logo
-    - Criterios para la imagen:
+- Criterios para la imagen:
         - Colores
         - Brillo
         - Calidad
         - Composición (minimalista y monocompuesta)
         - Objeto en el centro
-- En el formulario se envían más de una imagen
+- En el formulario se envían más de una imagen (con IA se podría elegir la mejor)
 - Qué pasa con los videos. Muy bonito sería en la portada. Al recibir el video, la herramienta lo transforma a formato instagram y lo exporta en .mp3 en la carpeta de Google Drive
 - Enviar las fotos a wsp con un bot puede ser un enlace para ver las imagenes, selecionar el orden y las suba automáticamente
 - Para revisión y aprobación rápida que envíe un link a wsp donde se selecciona la imagen de portada y las demás imágenes del carrusel, y luego se suba automáticamente a Instagram.
-- Si el texto estaba alineado a la izquierda en la publicación anterior, debería estar 
+- Si el texto estaba alineado a la izquierda en la publicación anterior, el siguiente debe estar a la derecha o dependiendo del contexto
+
+- [linktree udp](https://linktr.ee/comunicaciones.disenoudp)
+- [excel con datos de proyectos](https://docs.google.com/forms/d/e/1FAIpQLSfvkAMkUHfUSpBAncOZ2KhZuPwKaHQy2pEJXSa1ISl-iL5amA/viewform)
+
+![diagrama nuevo](image.png)
