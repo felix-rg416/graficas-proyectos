@@ -119,6 +119,6 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 - Si el texto estaba alineado a la izquierda en la publicación anterior, el siguiente debe estar a la derecha o dependiendo del contexto
 
 - [linktree udp](https://linktr.ee/comunicaciones.disenoudp)
-- [excel con datos de proyectos](https://docs.google.com/forms/d/e/1FAIpQLSfvkAMkUHfUSpBAncOZ2KhZuPwKaHQy2pEJXSa1ISl-iL5amA/viewform)
+- [forms con datos de proyectos](https://docs.google.com/forms/d/e/1FAIpQLSfvkAMkUHfUSpBAncOZ2KhZuPwKaHQy2pEJXSa1ISl-iL5amA/viewform)
 
 ![diagrama nuevo](image.png)

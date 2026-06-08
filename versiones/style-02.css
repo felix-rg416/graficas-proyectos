@@ -48,11 +48,17 @@
     --color-negro: #000000;
     --color-blanco: #ffffff;
     --color-rojo: #d12e1c;
+    /* Pantone 485 C  — solo texto blanco */
     --color-verde-osc: #3b7359;
+    /* Pantone 555 C  — solo texto blanco */
     --color-azul: #335c96;
+    /* Pantone 647 C  — solo texto blanco */
     --color-verde-cla: #91dba6;
+    /* Pantone 359 C  — solo texto negro  */
     --color-amarillo: #edd121;
+    /* Pantone 116 C  — solo texto negro  */
     --color-azul-gris: #99b0c9;
+    /* Pantone 644 C  — solo texto negro  */
 
     /* Dimensiones del canvas — formato Instagram portrait 4:5 */
     --slide-w: 1080px;
@@ -86,13 +92,6 @@ body {
     align-items: center;
     padding: 40px 24px;
     gap: 40px;
-}
-
-/* =============================================
-       UTILIDADES
-    ============================================= */
-.oculto {
-    display: none !important;
 }
 
 /* =============================================
@@ -164,80 +163,6 @@ body {
     grid-column: 1 / -1;
 }
 
-.horario-grupo {
-    display: flex;
-    gap: 8px;
-}
-
-.horario-grupo input {
-    flex: 1;
-}
-
-/* =============================================
-       COLOR PICKER (swatches institucionales)
-    ============================================= */
-.color-picker {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    padding-top: 4px;
-}
-
-.color-swatch {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 2px solid #333;
-    cursor: pointer;
-    padding: 0;
-    transition: transform 0.15s, border-color 0.15s;
-    background: #222;
-}
-
-.color-swatch:hover {
-    transform: scale(1.1);
-    border-color: #666;
-}
-
-.color-swatch.activo {
-    border-color: var(--color-blanco);
-    transform: scale(1.15);
-}
-
-.swatch-none {
-    background:
-        linear-gradient(45deg,
-            transparent 46%,
-            #d12e1c 46%,
-            #d12e1c 54%,
-            transparent 54%),
-        #222;
-}
-
-.swatch-rojo {
-    background: var(--color-rojo);
-}
-
-.swatch-verde-osc {
-    background: var(--color-verde-osc);
-}
-
-.swatch-azul {
-    background: var(--color-azul);
-}
-
-.swatch-verde-cla {
-    background: var(--color-verde-cla);
-}
-
-.swatch-amarillo {
-    background: var(--color-amarillo);
-}
-
-.swatch-azul-gris {
-    background: var(--color-azul-gris);
-}
-
 /* =============================================
        NAVEGACIÓN DE SLIDES
     ============================================= */
@@ -247,7 +172,7 @@ body {
     align-items: center;
 }
 
-.nav-slides .nav-btn {
+.nav-slides button {
     background: #222;
     border: 1px solid #333;
     border-radius: 6px;
@@ -260,13 +185,13 @@ body {
     transition: all 0.2s;
 }
 
-.nav-slides .nav-btn.activo {
+.nav-slides button.activo {
     background: var(--color-blanco);
     color: var(--color-negro);
     border-color: var(--color-blanco);
 }
 
-.nav-slides .nav-btn:hover:not(.activo) {
+.nav-slides button:hover:not(.activo) {
     border-color: #666;
     color: var(--color-blanco);
 }
@@ -298,6 +223,7 @@ body {
     transform: scale(var(--preview-scale));
     overflow: hidden;
     display: none;
+    /* cada slide se muestra individualmente */
 }
 
 .slide.visible {
@@ -320,45 +246,17 @@ body {
     inset: 0;
     background-size: cover;
     background-position: center;
-    /* Color por defecto: solo el oscurecido para legibilidad */
-    --overlay-color: transparent;
+    /* La imagen se setea por JS */
 }
 
-/* Capa de gradiente + color overlay sobre la imagen */
+/* Overlay oscuro sobre la imagen de fondo */
 #slide-1 .fondo::after {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(to bottom,
-            rgba(0, 0, 0, 0.15) 0%,
-            rgba(0, 0, 0, 0.55) 100%),
-        var(--overlay-color);
-}
-
-/* Variantes de color overlay — paleta institucional FaAAD */
-#slide-1 .fondo.overlay-rojo {
-    --overlay-color: color-mix(in srgb, var(--color-rojo) 55%, transparent);
-}
-
-#slide-1 .fondo.overlay-verde-osc {
-    --overlay-color: color-mix(in srgb, var(--color-verde-osc) 55%, transparent);
-}
-
-#slide-1 .fondo.overlay-azul {
-    --overlay-color: color-mix(in srgb, var(--color-azul) 55%, transparent);
-}
-
-#slide-1 .fondo.overlay-verde-cla {
-    --overlay-color: color-mix(in srgb, var(--color-verde-cla) 55%, transparent);
-}
-
-#slide-1 .fondo.overlay-amarillo {
-    --overlay-color: color-mix(in srgb, var(--color-amarillo) 55%, transparent);
-}
-
-#slide-1 .fondo.overlay-azul-gris {
-    --overlay-color: color-mix(in srgb, var(--color-azul-gris) 55%, transparent);
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.25) 0%,
+            rgba(0, 0, 0, 0.55) 100%);
 }
 
 /* Todo el texto debe quedar encima del overlay */
@@ -393,6 +291,14 @@ body {
     gap: 4px;
 }
 
+#slide-1 .participantes .label {
+    font-family: var(--font-body);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--color-blanco);
+    opacity: 0.85;
+}
+
 #slide-1 .participantes .nombres {
     font-family: var(--font-body);
     font-size: 34px;
@@ -408,10 +314,8 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-/* LOGO DE LA FaAAD */
 #slide-1 .pie .lockup svg {
-    /* 32 56 o 64px */
-    height: 64px;
+    height: 32px;
     width: auto;
     fill: var(--color-blanco);
 }
@@ -424,7 +328,7 @@ body {
 }
 
 /* =============================================
-       SLIDE 2 — Descripción + datos prácticos
+       SLIDE 2 — Descripción + datos logísticos
     ============================================= */
 #slide-2 {
     background: var(--color-negro);
@@ -452,13 +356,13 @@ body {
     align-items: center;
 }
 
-#slide-2 .datos-bloque {
+#slide-2 .datos {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-#slide-2 .dato {
+#slide-2 .datos p {
     font-family: var(--font-mono);
     font-size: 28px;
     letter-spacing: 0.06em;
@@ -467,8 +371,20 @@ body {
     line-height: 1.4;
 }
 
-/* Si todos los datos están ocultos, ocultar el bloque también */
-#slide-2 .datos-bloque:not(:has(.dato:not(.oculto))) {
+#slide-2 .hora {
+    display: flex;
+    gap: 0.5em;
+}
+#slide-2 .hora p {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blanco);
+    line-height: 1.4;
+}
+
+.oculto {
     display: none;
 }
 
@@ -515,9 +431,4 @@ body {
 
 .btn-exportar:hover {
     opacity: 0.8;
-}
-
-.btn-exportar:disabled {
-    opacity: 0.5;
-    cursor: wait;
 }

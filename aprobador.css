@@ -1,0 +1,475 @@
+/* =============================================
+   APROBADOR.CSS
+   Estilos específicos de la vista de aprobación.
+   Requiere style.css cargado antes (fuentes, vars).
+   ============================================= */
+
+/* =============================================
+   LAYOUT GENERAL
+   ============================================= */
+body.aprobador {
+    background: #111;
+    color: var(--color-blanco);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    padding: 40px 24px;
+    display: block;
+    /* override del display:flex del body en style.css */
+}
+
+.approver-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* =============================================
+   HEADER del proyecto
+   ============================================= */
+.approver-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #333;
+}
+
+.approver-header .proj-tipo {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.approver-header .proj-titulo {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--color-blanco);
+}
+
+/* =============================================
+   INDICADOR DE ETAPA
+   ============================================= */
+.stage-indicator {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+}
+
+.stage-dot {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #555;
+    padding: 8px 14px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+
+.stage-dot.activo {
+    color: var(--color-blanco);
+    border-color: var(--color-blanco);
+}
+
+.stage-dot.completo {
+    color: #888;
+    border-color: #555;
+}
+
+/* =============================================
+   ETAPAS — visible / oculta
+   ============================================= */
+.stage {
+    display: none;
+}
+
+.stage.visible {
+    display: block;
+}
+
+.stage h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--color-blanco);
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+/* =============================================
+   GRILLA DE CANDIDATOS
+   ============================================= */
+.candidatos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 220px));
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+/* =============================================
+   CANDIDATO CARD
+   ============================================= */
+.candidato-card {
+    background: transparent;
+    border: 2px solid #333;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: border-color 0.2s, transform 0.15s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    font-family: inherit;
+}
+
+.candidato-card:hover {
+    border-color: #888;
+    transform: translateY(-3px);
+}
+
+.candidato-card.activo {
+    border-color: var(--color-blanco);
+}
+
+.candidato-card .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    padding: 8px 12px;
+    text-align: left;
+    background: #1a1a1a;
+}
+
+/* =============================================
+   THUMB WRAPPER — contiene el cover escalado
+   ============================================= */
+.thumb-wrapper {
+    width: 200px;
+    height: 250px;
+    /* 200 × 1.25 = ratio 4:5 */
+    overflow: hidden;
+    position: relative;
+}
+
+/* =============================================
+   COVER THUMB — réplica del slide 1 a escala 0.185
+   (200/1080 ≈ 0.185)
+   Estructura y proporciones idénticas al slide 1
+   del editor — se duplica acá para no acoplar
+   ambas páginas.
+   ============================================= */
+.cover-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 1350px;
+    transform-origin: top left;
+    transform: scale(0.185);
+    background: var(--color-negro);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--padding);
+    overflow: hidden;
+}
+
+.cover-thumb .fondo {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    --overlay-color: transparent;
+}
+
+.cover-thumb .fondo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.15) 0%,
+            rgba(0, 0, 0, 0.55) 100%),
+        var(--overlay-color);
+}
+
+/* Variantes de overlay de color */
+.cover-thumb .fondo.overlay-rojo {
+    --overlay-color: color-mix(in srgb, var(--color-rojo) 55%, transparent);
+}
+
+.cover-thumb .fondo.overlay-verde-osc {
+    --overlay-color: color-mix(in srgb, var(--color-verde-osc) 55%, transparent);
+}
+
+.cover-thumb .fondo.overlay-azul {
+    --overlay-color: color-mix(in srgb, var(--color-azul) 55%, transparent);
+}
+
+.cover-thumb .fondo.overlay-verde-cla {
+    --overlay-color: color-mix(in srgb, var(--color-verde-cla) 55%, transparent);
+}
+
+.cover-thumb .fondo.overlay-amarillo {
+    --overlay-color: color-mix(in srgb, var(--color-amarillo) 55%, transparent);
+}
+
+.cover-thumb .fondo.overlay-azul-gris {
+    --overlay-color: color-mix(in srgb, var(--color-azul-gris) 55%, transparent);
+}
+
+.cover-thumb>*:not(.fondo) {
+    position: relative;
+    z-index: 1;
+}
+
+.cover-thumb .tipo-evento {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blanco);
+}
+
+.cover-thumb .titulo {
+    font-family: var(--font-display);
+    font-size: 144px;
+    line-height: 1.0;
+    color: var(--color-blanco);
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 32px;
+    word-break: break-word;
+}
+
+.cover-thumb .participantes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cover-thumb .participantes .nombres {
+    font-family: var(--font-body);
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--color-blanco);
+}
+
+.cover-thumb .pie {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 36px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* LOGO DE LA FaAAD */
+.cover-thumb .pie .lockup svg {
+    /* 32 56 o 64px */
+    height: 64px;
+    width: auto;
+    fill: var(--color-blanco);
+}
+
+.cover-thumb .pie .escuela {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--color-blanco);
+}
+
+/* =============================================
+   ETAPA 3 — preview final más grande (escala 0.37)
+   ============================================= */
+.preview-final-wrapper {
+    width: calc(1080px * 0.37);
+    height: calc(1350px * 0.37);
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto 32px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px #333;
+}
+
+.preview-final-wrapper .cover-thumb {
+    transform: scale(0.37);
+}
+
+/* =============================================
+   BOTONES DE ACCIÓN
+   ============================================= */
+.acciones {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.btn-accion {
+    background: transparent;
+    color: var(--color-blanco);
+    border: 1px solid #444;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-accion:hover {
+    border-color: var(--color-blanco);
+}
+
+.btn-accion.primario {
+    background: var(--color-blanco);
+    color: var(--color-negro);
+    border-color: var(--color-blanco);
+}
+
+.btn-accion.primario:hover {
+    opacity: 0.85;
+}
+
+.btn-accion:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+/* =============================================
+   MENSAJE DE CONFIRMACIÓN
+   ============================================= */
+.confirmacion {
+    text-align: center;
+    padding: 20px 24px;
+    margin: 24px auto 0;
+    max-width: 540px;
+    background: rgba(145, 219, 166, 0.08);
+    border: 1px solid var(--color-verde-cla);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-verde-cla);
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* =============================================
+   PREVIEW OVERLAY — preview ampliado en hover/tap
+   El overlay tiene pointer-events: none, así el cursor
+   puede pasar a otra card sin que el overlay capture clicks.
+   Solo el .preview-content captura interacciones.
+   ============================================= */
+.preview-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 24px;
+    pointer-events: none;
+}
+
+.preview-overlay.visible {
+    display: flex;
+}
+
+.preview-content {
+    pointer-events: auto;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    max-width: 100%;
+}
+
+.btn-cerrar-preview {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: var(--color-blanco);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.btn-cerrar-preview:hover {
+    opacity: 1;
+}
+
+/* Thumb del preview — responsive con 3 breakpoints */
+.preview-thumb-grande {
+    width: 320px;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;
+}
+
+.preview-thumb-grande .cover-thumb {
+    transform: scale(0.296);
+}
+
+.preview-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+}
+
+@media (min-width: 600px) {
+    .preview-thumb-grande {
+        width: 400px;
+        height: 500px;
+    }
+
+    .preview-thumb-grande .cover-thumb {
+        transform: scale(0.37);
+    }
+}
+
+@media (min-width: 900px) and (min-height: 800px) {
+    .preview-thumb-grande {
+        width: 520px;
+        height: 650px;
+    }
+
+    .preview-thumb-grande .cover-thumb {
+        transform: scale(0.481);
+    }
+}

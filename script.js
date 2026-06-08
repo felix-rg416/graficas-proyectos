@@ -6,11 +6,14 @@ const estado = {
     titulo: 'Título del evento o actividad',
     participantes: 'Nombre Participantes',
     descripcion: 'Descripción del evento o actividad.',
-    horario: '00:00 A 00:00 HRS',
-    lugar: 'LUGAR',
-    direccion: 'DIRECCIÓN',
+    fecha: '',
+    desde: '',
+    hasta: '',
+    lugar: '',
+    direccion: '',
     escuela: 'Escuela',
     imagenFondo: '',
+    overlayColor: 'none',
     slideActivo: 1
 };
 
@@ -18,7 +21,7 @@ const estado = {
 // 2. ACTUALIZAR EL DOM con el estado
 // ------------------------------------------
 function renderizar() {
-    // Slide 1
+    // ---- SLIDE 1 ----
     document.getElementById('s1-tipo').textContent = estado.tipo;
     document.getElementById('s1-titulo').textContent = estado.titulo;
     document.getElementById('s1-participantes').textContent = estado.participantes;
@@ -32,20 +35,41 @@ function renderizar() {
         fondo.style.backgroundImage = 'none';
     }
 
-    const desde = estado.desde || '00:00';
-    const hasta = estado.hasta || '00:00';
+    // Color overlay slide 1 — clase basada en estado
+    const coloresPosibles = ['rojo', 'verde-osc', 'azul', 'verde-cla', 'amarillo', 'azul-gris'];
+    coloresPosibles.forEach(c => fondo.classList.remove(`overlay-${c}`));
+    if (estado.overlayColor && estado.overlayColor !== 'none') {
+        fondo.classList.add(`overlay-${estado.overlayColor}`);
+    }
 
-    // Slide 2
+    // ---- SLIDE 2 ----
     document.getElementById('s2-tipo').textContent = estado.tipo;
     document.getElementById('s2-descripcion').textContent = estado.descripcion;
-    document.getElementById('s2-fecha').textContent = estado.fecha ? new Date(estado.fecha).toLocaleDateString('es-CL', { day: '2-digit', month: 'long' }) : 'FECHA';
-    document.getElementById('s2-horario').textContent = `${desde} A ${hasta} HRS`;
-    document.getElementById('s2-lugar').textContent = estado.lugar;
-    document.getElementById('s2-direccion').textContent = estado.direccion;
+
+    // Construir cada dato si tiene contenido; ocultar si no
+    const fechaTxt = estado.fecha
+        ? new Date(estado.fecha).toLocaleDateString('es-CL', { day: '2-digit', month: 'long' })
+        : '';
+    const horarioTxt = (estado.desde || estado.hasta)
+        ? `${estado.desde || '--:--'} A ${estado.hasta || '--:--'} HRS`
+        : '';
+
+    aplicarDato('s2-fecha', fechaTxt);
+    aplicarDato('s2-horario', horarioTxt);
+    aplicarDato('s2-lugar', estado.lugar);
+    aplicarDato('s2-direccion', estado.direccion);
+}
+
+// Helper: setea contenido y oculta si está vacío
+function aplicarDato(elId, valor) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.textContent = valor || '';
+    el.classList.toggle('oculto', !valor);
 }
 
 // ------------------------------------------
-// 3. LEER INPUTS y actualizar estado
+// 3. BINDINGS — inputs → estado → render
 // ------------------------------------------
 function bindInputs() {
     const mapeo = {
@@ -73,7 +97,22 @@ function bindInputs() {
 }
 
 // ------------------------------------------
-// 4. NAVEGACIÓN ENTRE SLIDES
+// 4. COLOR PICKER — swatches → overlay
+// ------------------------------------------
+function bindColorPicker() {
+    const swatches = document.querySelectorAll('.color-swatch');
+    swatches.forEach(swatch => {
+        swatch.addEventListener('click', () => {
+            estado.overlayColor = swatch.dataset.color;
+            swatches.forEach(s => s.classList.remove('activo'));
+            swatch.classList.add('activo');
+            renderizar();
+        });
+    });
+}
+
+// ------------------------------------------
+// 5. NAVEGACIÓN ENTRE SLIDES
 // ------------------------------------------
 function mostrarSlide(n) {
     estado.slideActivo = n;
@@ -81,40 +120,102 @@ function mostrarSlide(n) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('visible'));
     document.getElementById(`slide-${n}`).classList.add('visible');
 
-    document.querySelectorAll('.nav-slides button').forEach((btn, i) => {
-        btn.classList.toggle('activo', i + 1 === n);
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('activo', parseInt(btn.dataset.slide) === n);
+    });
+}
+
+function bindNavSlides() {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            mostrarSlide(parseInt(btn.dataset.slide));
+        });
     });
 }
 
 // ------------------------------------------
-// 5. EXPORTAR PNG (próximo paso: Puppeteer)
-//    Por ahora abre el slide en pantalla completa
+// 6. EXPORTAR PNG del slide activo
+//    Usa html-to-image; espera a que las fuentes
+//    carguen antes de capturar para evitar fallbacks.
 // ------------------------------------------
-function exportarSlide() {
-    alert(`Exportar slide ${estado.slideActivo} — esta función se implementa en el Paso 3 con Puppeteer.`);
+async function exportarSlide() {
+    const btn = document.getElementById('btn-exportar');
+    btn.disabled = true;
+
+    try {
+        // Esperar a que se carguen las fuentes custom
+        await document.fonts.ready;
+
+        const slide = document.getElementById(`slide-${estado.slideActivo}`);
+
+        const dataUrl = await htmlToImage.toPng(slide, {
+            width: 1080,
+            height: 1350,
+            pixelRatio: 1,
+            cacheBust: true,
+            style: {
+                transform: 'none',
+                width: '1080px',
+                height: '1350px'
+            }
+        });
+
+        const link = document.createElement('a');
+        link.download = `slide-${estado.slideActivo}.png`;
+        link.href = dataUrl;
+        link.click();
+    } catch (error) {
+        console.error('Error al exportar PNG:', error);
+        alert('Error al exportar PNG. Revisá la consola del navegador.');
+    } finally {
+        btn.disabled = false;
+    }
 }
 
 // ------------------------------------------
-// 6. LEER PARÁMETROS DE URL (Paso 2.3)
-//    Permite que Puppeteer pase datos así:
-//    index.html?titulo=...&participantes=...
+// 7. LEER PARÁMETROS DE URL
+//    Permite que Apps Script / htmlcsstoimage pasen
+//    los datos así: index.html?titulo=...&desde=...
 // ------------------------------------------
 function cargarDesdeURL() {
     const params = new URLSearchParams(window.location.search);
-    const campos = ['tipo', 'titulo', 'participantes', 'descripcion', 'desde', 'hasta', 'lugar', 'direccion', 'escuela', 'imagenFondo'];
-    campos.forEach(c => {
-        if (params.has(c)) {
-            estado[c] = params.get(c);
-            const inputId = c === 'imagenFondo' ? 'imagen-fondo'
-                : c === 'tipo' ? 'tipo-evento'
-                    : c === 'desde' ? 'desde'
-                        : c === 'hasta' ? 'hasta'
-                            : c;
+    const camposURL = {
+        'tipo': 'tipo-evento',
+        'titulo': 'titulo',
+        'participantes': 'participantes',
+        'descripcion': 'descripcion',
+        'fecha': 'fecha',
+        'desde': 'desde',
+        'hasta': 'hasta',
+        'lugar': 'lugar',
+        'direccion': 'direccion',
+        'escuela': 'escuela',
+        'imagenFondo': 'imagen-fondo'
+    };
+
+    Object.entries(camposURL).forEach(([estadoKey, inputId]) => {
+        if (params.has(estadoKey)) {
+            const valor = params.get(estadoKey);
+            estado[estadoKey] = valor;
             const el = document.getElementById(inputId);
-            if (el) el.value = params.get(c);
+            if (el) el.value = valor;
         }
     });
-    if (params.has('slide')) mostrarSlide(parseInt(params.get('slide')));
+
+    // Color overlay desde URL
+    if (params.has('overlayColor')) {
+        estado.overlayColor = params.get('overlayColor');
+        const swatch = document.querySelector(`.color-swatch[data-color="${estado.overlayColor}"]`);
+        if (swatch) {
+            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('activo'));
+            swatch.classList.add('activo');
+        }
+    }
+
+    // Slide a mostrar
+    if (params.has('slide')) {
+        mostrarSlide(parseInt(params.get('slide')));
+    }
 }
 
 // ------------------------------------------
@@ -122,4 +223,7 @@ function cargarDesdeURL() {
 // ------------------------------------------
 cargarDesdeURL();
 bindInputs();
+bindColorPicker();
+bindNavSlides();
+document.getElementById('btn-exportar').addEventListener('click', exportarSlide);
 renderizar();

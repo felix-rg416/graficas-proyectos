@@ -19,7 +19,7 @@
         <h2>Datos del evento</h2>
 
         <div class="campo">
-            <label for="tipo-evento">Tipo de evento</label>
+            <label>Tipo de evento</label>
             <input type="text" id="tipo-evento" list="tipos-sugeridos" placeholder="Escribe o elige uno" />
             <datalist id="tipos-sugeridos">
                 <option value="CONVERSATORIO"></option>
@@ -31,76 +31,52 @@
             </datalist>
         </div>
 
-        <!-- <div class="campo">
-            <label for="escuela">Escuela</label>
-            <input type="text" id="escuela" list="tipos-sugeridos" placeholder="Ej: Escuela de Diseño" />
-            <datalist id="tipos-sugeridos">
-                <option value="ARQUITECTURA"></option>
-                <option value="ARTE"></option>
-                <option value="DISEÑO"></option>
-            </datalist>
-        </div> -->
+        <div class="campo">
+            <label>Escuela</label>
+            <input type="text" id="escuela" placeholder="Ej: Escuela de Diseño" />
+        </div>
 
         <div class="campo campo--full">
-            <label for="titulo">Título del evento</label>
+            <label>Título del evento</label>
             <input type="text" id="titulo"
                 placeholder="Ej: Gestión ambiental, sustentabilidad y cambio climático en la industria del diseño" />
         </div>
 
         <div class="campo campo--full">
-            <label for="participantes">Participante(s) — separados por coma</label>
+            <label>Participante(s) — separados por coma</label>
             <input type="text" id="participantes" placeholder="Ej: Ana López, Pedro Soto" />
         </div>
 
         <div class="campo campo--full">
-            <label for="descripcion">Descripción del evento</label>
+            <label>Descripción del evento</label>
             <textarea id="descripcion" placeholder="Breve descripción del evento..."></textarea>
         </div>
 
         <div class="campo">
-            <label for="fecha">Fecha</label>
+            <label>Fecha</label>
             <input type="date" id="fecha" />
         </div>
 
         <div class="campo">
-            <label for="desde">Horario</label>
-            <div class="horario-grupo">
-                <input type="time" id="desde" />
-                <input type="time" id="hasta" />
-            </div>
+            <label>Horario</label>
+            <!-- <input type="text" id="horario" placeholder="Ej: 09:30 A 10:30 HRS" /> -->
+            <input type="time" id="desde" name="hora">
+            <input type="time" id="hasta" name="hora">
         </div>
 
         <div class="campo">
-            <label for="lugar">Lugar</label>
+            <label>Lugar</label>
             <input type="text" id="lugar" placeholder="Ej: AUDITORIO, SALA..." />
         </div>
 
         <div class="campo campo--full">
-            <label for="direccion">Dirección / Sala</label>
+            <label>Dirección / Sala</label>
             <input type="text" id="direccion" placeholder="Ej: REPÚBLICA 180 — SALA 206" />
         </div>
 
         <div class="campo campo--full">
-            <label for="imagen-fondo">Imagen de fondo (URL) — slide 1</label>
+            <label>Imagen de fondo (URL) — slide 1</label>
             <input type="text" id="imagen-fondo" placeholder="https://... o dejar vacío para fondo negro" />
-        </div>
-
-        <div class="campo campo--full">
-            <label>Color overlay (slide 1)</label>
-            <div class="color-picker" id="color-picker">
-                <button type="button" class="color-swatch swatch-none activo" data-color="none"
-                    title="Sin color"></button>
-                <button type="button" class="color-swatch swatch-rojo" data-color="rojo" title="Rojo"></button>
-                <button type="button" class="color-swatch swatch-verde-osc" data-color="verde-osc"
-                    title="Verde oscuro"></button>
-                <button type="button" class="color-swatch swatch-azul" data-color="azul" title="Azul"></button>
-                <button type="button" class="color-swatch swatch-verde-cla" data-color="verde-cla"
-                    title="Verde claro"></button>
-                <button type="button" class="color-swatch swatch-amarillo" data-color="amarillo"
-                    title="Amarillo"></button>
-                <button type="button" class="color-swatch swatch-azul-gris" data-color="azul-gris"
-                    title="Azul gris"></button>
-            </div>
         </div>
     </div>
 
@@ -108,9 +84,9 @@
        NAVEGACIÓN ENTRE SLIDES
   ============================================= -->
     <div class="nav-slides">
-        <button type="button" class="nav-btn activo" data-slide="1">Slide 1</button>
-        <button type="button" class="nav-btn" data-slide="2">Slide 2</button>
-        <button type="button" class="nav-btn" data-slide="3">Slide 3</button>
+        <button class="activo" onclick="mostrarSlide(1)">Slide 1</button>
+        <button onclick="mostrarSlide(2)">Slide 2</button>
+        <button onclick="mostrarSlide(3)">Slide 3</button>
     </div>
 
     <!-- =============================================
@@ -124,10 +100,12 @@
             <span class="tipo-evento" id="s1-tipo">TIPO DE EVENTO</span>
             <div class="titulo" id="s1-titulo">TÍTULO DEL EVENTO</div>
             <div class="participantes">
-                <span class="nombres" id="s1-participantes">Nombre Participante</span>
+                <!-- <span class="label">Invitado</span> -->
+                <span class="nombres" id="s1-participantes">Nombre Partacipante</span>
             </div>
             <div class="pie">
                 <div class="lockup">
+                    <!-- Logo FaAADudp inline SVG — fill heredado del CSS -->
                     <svg viewBox="0 0 898.85 312" xmlns="http://www.w3.org/2000/svg">
                         <g>
                             <polygon
@@ -159,17 +137,23 @@
         <div class="slide" id="slide-2">
             <span class="tipo-evento" id="s2-tipo">TIPO DE EVENTO</span>
             <p class="descripcion" id="s2-descripcion">Descripción del evento.</p>
-            <div class="datos-bloque">
-                <p class="dato" id="s2-fecha"></p>
-                <p class="dato" id="s2-horario"></p>
-                <p class="dato" id="s2-lugar"></p>
-                <p class="dato" id="s2-direccion"></p>
+            <div class="datos">
+                <p id="s2-fecha">04 de Junio</p>
+            </div>
+            <div class="hora">
+                <p id="s2-horario">00:00 TO 00:00 HRS</p>
+
+            </div>
+            <div class="datos">
+                <p id="s2-lugar">LUGAR</p>
+                <p id="s2-direccion">DIRECCIÓN</p>
             </div>
         </div>
 
         <!-- SLIDE 3 -->
         <div class="slide" id="slide-3">
             <div class="logo-bloque">
+                <!-- Logo FaAAD Diseño (con bajada) inline SVG -->
                 <svg viewBox="0 0 900.38 439.42" xmlns="http://www.w3.org/2000/svg">
                     <g>
                         <g>
@@ -212,8 +196,7 @@
         </div>
 
     </div><!-- /preview-wrapper -->
-
-    <button type="button" class="btn-exportar" id="btn-exportar">Exportar PNG actual</button>
+    <button class="btn-exportar" onclick="exportarSlide()">Exportar PNG actual</button>
 
 </body>
 
