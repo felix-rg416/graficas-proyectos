@@ -121,4 +121,4 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 - [linktree udp](https://linktr.ee/comunicaciones.disenoudp)
 - [forms con datos de proyectos](https://docs.google.com/forms/d/e/1FAIpQLSfvkAMkUHfUSpBAncOZ2KhZuPwKaHQy2pEJXSa1ISl-iL5amA/viewform)
 
-![diagrama nuevo](image.png)
+![diagrama nuevo](./image.png)
