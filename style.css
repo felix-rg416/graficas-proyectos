@@ -6,9 +6,6 @@
        - NectoMono     : etiquetas técnicas, siempre en MAYÚSCULAS
   ============================================= */
 
-
-
-
 @font-face {
     font-family: 'WorkFaAAD';
     src: url('fonts/WorkFaAAD-A.otf') format('opentype');
@@ -387,7 +384,8 @@ body {
     display: flex;
     align-items: flex-end;
     padding-bottom: 32px;
-    word-break: break-word;
+    /* word-break: break-word; */
+    overflow-wrap: break-word;
 }
 
 #slide-1 .participantes {

@@ -73,8 +73,17 @@ function crearThumbContent(imagenURL, color) {
         fondo.classList.add(`overlay-${color}`);
     }
 
+    // thumb.querySelector('.tipo-evento').textContent = proyecto.tipo;
+    // thumb.querySelector('.titulo').textContent = proyecto.titulo;
+    // thumb.querySelector('.nombres').textContent = proyecto.participantes;
+    // thumb.querySelector('.escuela').textContent = proyecto.escuela;
+
     thumb.querySelector('.tipo-evento').textContent = proyecto.tipo;
-    thumb.querySelector('.titulo').textContent = proyecto.titulo;
+
+    const tituloEl = thumb.querySelector('.titulo');
+    tituloEl.textContent = proyecto.titulo;
+    ajustarTamanoTitulo(tituloEl);
+
     thumb.querySelector('.nombres').textContent = proyecto.participantes;
     thumb.querySelector('.escuela').textContent = proyecto.escuela;
 
@@ -109,6 +118,17 @@ function crearCardClickeable(imagenURL, color, etiqueta, onSeleccionar) {
     button.addEventListener('click', () => showPreview(data));
 
     return button;
+}
+
+// Ajusta el font-size del título según el largo del texto.
+// Evita que títulos largos rebasen el canvas del slide.
+function ajustarTamanoTitulo(tituloEl) {
+    const longitud = (tituloEl.textContent || '').length;
+    let tamano = 144;
+    if (longitud > 80) tamano = 72;
+    else if (longitud > 50) tamano = 88;
+    else if (longitud > 30) tamano = 110;
+    tituloEl.style.fontSize = tamano + 'px';
 }
 
 // =============================================
