@@ -74,26 +74,11 @@ function crearThumbContent(imagenURL, color) {
     }
 
     thumb.querySelector('.tipo-evento').textContent = proyecto.tipo;
-
-    const tituloEl = thumb.querySelector('.titulo');
-    tituloEl.textContent = proyecto.titulo;
-    ajustarTamanoTitulo(tituloEl);
-
+    thumb.querySelector('.titulo').textContent = proyecto.titulo;
     thumb.querySelector('.nombres').textContent = proyecto.participantes;
     thumb.querySelector('.escuela').textContent = proyecto.escuela;
 
     return fragmento;
-}
-
-// Ajusta el font-size del título según el largo del texto.
-// Evita que títulos largos rebasen el canvas del slide.
-function ajustarTamanoTitulo(tituloEl) {
-    const longitud = (tituloEl.textContent || '').length;
-    let tamano = 144;
-    if (longitud > 80) tamano = 72;
-    else if (longitud > 50) tamano = 88;
-    else if (longitud > 30) tamano = 110;
-    tituloEl.style.fontSize = tamano + 'px';
 }
 
 // =============================================
@@ -119,8 +104,8 @@ function crearCardClickeable(imagenURL, color, etiqueta, onSeleccionar) {
     // Hover (desktop) y click (tap móvil) abren el preview ampliado.
     // La selección efectiva ocurre desde el botón "Seleccionar" del preview.
     const data = { imagenURL, color, etiqueta, onSeleccionar };
-    button.addEventListener('mouseenter', () => showPreview(data));
-    button.addEventListener('mouseleave', () => scheduleHide(200));
+    // button.addEventListener('mouseenter', () => showPreview(data));
+    // button.addEventListener('mouseleave', () => scheduleHide(200));
     button.addEventListener('click', () => showPreview(data));
 
     return button;
@@ -308,8 +293,8 @@ function cancelHide() {
 
 // Mantener el preview abierto mientras el cursor esté sobre él
 const previewContent = document.getElementById('preview-content');
-previewContent.addEventListener('mouseenter', cancelHide);
-previewContent.addEventListener('mouseleave', () => scheduleHide(200));
+// previewContent.addEventListener('mouseenter', cancelHide);
+// previewContent.addEventListener('mouseleave', () => scheduleHide(200));
 
 // Botón "Seleccionar" dentro del preview confirma la elección
 document.getElementById('btn-seleccionar-preview').addEventListener('click', () => {
@@ -322,6 +307,14 @@ document.getElementById('btn-seleccionar-preview').addEventListener('click', () 
 document.getElementById('btn-cerrar-preview').addEventListener('click', hidePreview);
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') hidePreview();
+});
+
+document.addEventListener('click', (e) => {
+    const overlay = document.getElementById('preview-overlay');
+    if (!overlay.classList.contains('visible')) return;
+    if (e.target.closest('#preview-content')) return;
+    if (e.target.closest('.candidato-card')) return;
+    hidePreview();
 });
 
 // =============================================
