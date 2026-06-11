@@ -250,7 +250,8 @@ body.aprobador {
     display: flex;
     align-items: flex-end;
     padding-bottom: 32px;
-    word-break: break-word;
+    /* word-break: break-word; */
+    overflow-wrap: break-word;
 }
 
 .cover-thumb .participantes {
