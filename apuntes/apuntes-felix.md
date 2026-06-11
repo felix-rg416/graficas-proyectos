@@ -19,6 +19,11 @@ Herramienta de automatización de gráficas para proyectos.
     - [Fase 4: Google Drive](#fase-4-google-drive)
     - [Fase 5: Revisión y publicación](#fase-5-revisión-y-publicación)
 - [Preguntas](#preguntas)
+- [Actualizaciones y recomendaciones](#actualizaciones-y-recomendaciones)
+- [Comentarios y recomendaciones](#comentarios-y-recomendaciones)
+    - [01](#01)
+    - [02](#02)
+- [Enlaces](#enlaces)
 
 ## Herramientas y referencias
 
@@ -93,16 +98,28 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 
 ---
 
-## Preguntas
+## Actualizaciones y recomendaciones
+
+### Imágenes
+
+Para las imágenes, al usar un correo de la UDP, los archivos tienen acceso restringido y el Apps Script no puede sacar las imágenes. Por lo tanto, Claude me recomendó usar <cloudinary.com> que es una plataforma de gestión de imágenes que ofrece una API para manipular y optimizar imágenes en la nube.
+
+Entonces el Apps Script envía las imágenes de Drive a Cloudinary, y desde ahí se pueden obtener los enlaces públicos para hacer las gráficas.
+
+Hice la cuenta con mi correo insitucional. Luego se puede cambiar a otro correo para que gestione eso.
+
+## Comentarios y recomendaciones
+
+### 01
+
+**Preguntas para Emi y Simón**
 
 - ¿La gente rellenará un formulario web, un google forms o mandarán un correo?
 - ¿Puedo acceder a los datos o al menos a los campos que pide?
 - ¿Qué información deben ir en las gráficas?
 - ¿La idea es que sea una publicación tipo carrusel o sólo una imagen?
 
-## Comentarios y recomendaciones
-
-### 01
+**Comentarios y recomendaciones**
 
 - Tamaño: 1020x1350px (tamaño recomendado para Instagram) 
 - A veces puede ser sólo una imagen, sin el título ni el logo
@@ -118,7 +135,13 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 - Para revisión y aprobación rápida que envíe un link a wsp donde se selecciona la imagen de portada y las demás imágenes del carrusel, y luego se suba automáticamente a Instagram.
 - Si el texto estaba alineado a la izquierda en la publicación anterior, el siguiente debe estar a la derecha o dependiendo del contexto
 
+### 02
+
+**Preguntas para Emi y Simón**
+
+- Hay títulos demasiado largos. Propongo que se ponga un límite de caracteres para que no se rompa la composición.
+
+## Enlaces
+
 - [linktree udp](https://linktr.ee/comunicaciones.disenoudp)
 - [forms con datos de proyectos](https://docs.google.com/forms/d/e/1FAIpQLSfvkAMkUHfUSpBAncOZ2KhZuPwKaHQy2pEJXSa1ISl-iL5amA/viewform)
-
-![diagrama nuevo](./image.png)
