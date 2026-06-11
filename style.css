@@ -384,7 +384,7 @@ body {
     display: flex;
     align-items: flex-end;
     padding-bottom: 32px;
-    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 #slide-1 .participantes {
@@ -408,8 +408,10 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
+/* LOGO DE LA FaAAD */
 #slide-1 .pie .lockup svg {
-    height: 32px;
+    /* 32 56 o 64px */
+    height: 64px;
     width: auto;
     fill: var(--color-blanco);
 }

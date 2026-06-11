@@ -23,11 +23,7 @@ const estado = {
 function renderizar() {
     // ---- SLIDE 1 ----
     document.getElementById('s1-tipo').textContent = estado.tipo;
-
-    const tituloEl = document.getElementById('s1-titulo');
-    tituloEl.textContent = estado.titulo;
-    ajustarTamanoTitulo(tituloEl);
-
+    document.getElementById('s1-titulo').textContent = estado.titulo;
     document.getElementById('s1-participantes').textContent = estado.participantes;
     document.getElementById('s1-escuela').textContent = estado.escuela;
 
@@ -220,19 +216,6 @@ function cargarDesdeURL() {
     if (params.has('slide')) {
         mostrarSlide(parseInt(params.get('slide')));
     }
-}
-
-// ------------------------------------------
-// Ajusta el font-size del título según largo del texto.
-// Evita que títulos largos rebasen el canvas del slide.
-// ------------------------------------------
-function ajustarTamanoTitulo(tituloEl) {
-    const longitud = (tituloEl.textContent || '').length;
-    let tamano = 144;
-    if (longitud > 80) tamano = 72;
-    else if (longitud > 50) tamano = 88;
-    else if (longitud > 30) tamano = 110;
-    tituloEl.style.fontSize = tamano + 'px';
 }
 
 // ------------------------------------------
