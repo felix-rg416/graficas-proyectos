@@ -55,10 +55,10 @@
     --color-azul-gris: #99b0c9;
 
     /* Dimensiones del canvas — formato Instagram portrait 4:5 */
-    --slide-w: 1080px;
+    --slide-w: 1020px;
     --slide-h: 1350px;
 
-    /* Escala de visualización en pantalla (el canvas real es 1080×1350) */
+    /* Escala de visualización en pantalla (el canvas real es 1020×1350) */
     --preview-scale: 0.37;
 
     /* Espaciado interno del slide */
@@ -273,7 +273,7 @@ body {
 
 /* =============================================
        CONTENEDOR DE PREVIEW
-       El canvas real es 1080×1350px, escalado al
+       El canvas real es 1020×1350px, escalado al
        preview-scale para que quepa en pantalla.
     ============================================= */
 .preview-wrapper {
@@ -521,4 +521,28 @@ body {
 .btn-exportar:disabled {
     opacity: 0.5;
     cursor: wait;
+}
+
+/* =============================================
+   RESPONSIVE — celulares
+   ============================================= */
+@media (max-width: 600px) {
+
+    /* Achicar el preview para que entre en la pantalla */
+    :root {
+        --preview-scale: 0.30;
+    }
+
+    /* Body con menos padding */
+    body {
+        padding: 20px 12px;
+        gap: 24px;
+    }
+
+    /* Panel de controles a una sola columna */
+    .controles {
+        grid-template-columns: 1fr;
+        padding: 20px 16px;
+        gap: 14px;
+    }
 }

@@ -250,13 +250,13 @@ document.getElementById('btn-exportar-final').addEventListener('click', async ()
         const thumb = document.querySelector('#preview-final .cover-thumb');
 
         const dataUrl = await htmlToImage.toPng(thumb, {
-            width: 1080,
+            width: 1020,
             height: 1350,
             pixelRatio: 1,
             cacheBust: true,
             style: {
                 transform: 'none',
-                width: '1080px',
+                width: '1020px',
                 height: '1350px'
             }
         });

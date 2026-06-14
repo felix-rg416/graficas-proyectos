@@ -163,7 +163,7 @@ body.aprobador {
 
 /* =============================================
    COVER THUMB — réplica del slide 1 a escala 0.185
-   (200/1080 ≈ 0.185)
+   (200/1020 ≈ 0.185)
    Estructura y proporciones idénticas al slide 1
    del editor — se duplica acá para no acoplar
    ambas páginas.
@@ -172,7 +172,7 @@ body.aprobador {
     position: absolute;
     top: 0;
     left: 0;
-    width: 1080px;
+    width: 1020px;
     height: 1350px;
     transform-origin: top left;
     transform: scale(0.185);
@@ -294,7 +294,7 @@ body.aprobador {
    ETAPA 3 — preview final más grande (escala 0.37)
    ============================================= */
 .preview-final-wrapper {
-    width: calc(1080px * 0.37);
+    width: calc(1020px * 0.37);
     height: calc(1350px * 0.37);
     overflow: hidden;
     position: relative;
@@ -472,5 +472,71 @@ body.aprobador {
 
     .preview-thumb-grande .cover-thumb {
         transform: scale(0.481);
+    }
+}
+
+/* =============================================
+   RESPONSIVE — celulares
+   ============================================= */
+@media (max-width: 600px) {
+
+    /* Padding más ajustado */
+    body.aprobador {
+        padding: 24px 12px;
+    }
+
+    /* Título del header más compacto */
+    .approver-header .proj-titulo {
+        font-size: 22px;
+    }
+
+    /* Cards de candidatos a una sola columna y más grandes */
+    .candidatos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .thumb-wrapper {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        aspect-ratio: 1020 / 1350;
+        margin: 0 auto;
+    }
+
+    .cover-thumb {
+        transform: scale(0.275);
+    }
+
+    /* Preview final adaptado al ancho del celular */
+    .preview-final-wrapper {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        aspect-ratio: 1020 / 1350;
+    }
+
+    .preview-final-wrapper .cover-thumb {
+        transform: scale(0.275);
+    }
+
+    /* Preview ampliado (hover/tap) más chico para celular */
+    .preview-thumb-grande {
+        width: 280px;
+        height: 370px;
+    }
+
+    .preview-thumb-grande .cover-thumb {
+        transform: scale(0.275);
+    }
+
+    /* Botones de acción apilados verticalmente y a ancho completo */
+    .acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-accion {
+        width: 100%;
+        text-align: center;
     }
 }

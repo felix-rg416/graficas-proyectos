@@ -3,15 +3,14 @@
 Herramienta de automatización de gráficas para proyectos.
 
 1. Persona rellena un formulario de una página web para inscribir su proyecto
-2. La herramienta recibe la información
+2. La herramienta recibe la información y genera una gráfica con esa información usando un visualizador de datos externo
 3. La herramienta genera las gráficas
-4. La herramienta envía las gráficas a Google Drive
-5. Una persona aprueba la imagen
-6. Se publica en Instagram
+4. La herramienta envía un enlace a quien aprueba las gráficas
+5. Una persona aprueba las imágenes
+6. La herramienta publica las gráficas en Instagram
 
 ## Índice
 
-- [Herramientas recomendadas](#herramientas-recomendadas)
 - [Fases](#fases)
     - [Fase 1: Datos de entrada](#fase-1-datos-de-entrada)
     - [Fase 2: Visualizador de datos externos](#fase-2-visualizador-de-datos-externos)
@@ -19,25 +18,14 @@ Herramienta de automatización de gráficas para proyectos.
     - [Fase 4: Google Drive](#fase-4-google-drive)
     - [Fase 5: Revisión y publicación](#fase-5-revisión-y-publicación)
 - [Preguntas](#preguntas)
-- [Actualizaciones y recomendaciones](#actualizaciones-y-recomendaciones)
-- [Comentarios y recomendaciones](#comentarios-y-recomendaciones)
+- [Herramientas y recomendaciones](#herramientas-y-recomendaciones)
+    - [Imágenes](#imágenes)
+        - [Desde Drive a Cloudinary](#desde-drive-a-cloudinary)
+        - [Filtro de imágenes](#filtro-de-imágenes)
+- [Preguntas, comentarios y recomendaciones](#preguntas-comentarios-y-recomendaciones)
     - [01](#01)
     - [02](#02)
 - [Enlaces](#enlaces)
-
-## Herramientas y referencias
-
-[Índice](#índice)
-
-- <https://github.com/matbutom/PCD-graficas-2026>
-    - Referencia de herramienta similar hecha por Mateo para el PCD.
-- Google apps script
-    - Para lograr ineracción con Google Drive
-- Claude AI|
-    - Para generar las especificaciones de las gráficas a partir de los datos del proyecto
-- Pupeteer
-    - Para capturar las gráficas generadas en el visualizador de datos y guardarlas como imágenes
-    - (https://pptr.dev/guides/what-is-puppeteer)
 
 ## Fases:
 
@@ -52,8 +40,6 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 - Conseguir acceso al formulario, google sheets o a los campos que se deben rellenar.
 - Decidir qué campo mapea a qué elemento de la gráfica.
 
----
-
 |Datos de entrada|Elemento gráfico|
 |----------------|----------------|
 |Nombre del proyecto|Título de la gráfica|
@@ -65,8 +51,6 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 - Modificar el app.js de Mateo para recibir datos vía parámetros en la URL.
 - Crear una función qeu tome un JASON (proyecto) y configure el estado.
 - Probar localmente pasando datos manualmente.
-
----
 
 1. Ertructura base: index.html + style.css
 2. Canvas con p5.js: inicializar p5l, definir tamaño, fondo y grilla
@@ -96,19 +80,43 @@ Como nunca he hecho algo así, le pedí que me haga un plan para ir paso a paso.
 - Si rechaza: regenerar otra gráfica o ajustar parámetros. 
 - Documentar para que otros puedan usar la herramienta.
 
----
+## Herramientas y recomendaciones
 
-## Actualizaciones y recomendaciones
+- <https://github.com/matbutom/PCD-graficas-2026>
+    - Referencia de herramienta similar hecha por Mateo para el PCD.
+- Google apps script
+    - Para lograr ineracción con Google Drive
+- Claude AI
+    - Para ayudarme a aprender y crear la herramienta
+- Pupeteer
+    - Para capturar las gráficas generadas en el visualizador de datos y guardarlas como imágenes
+    - (https://pptr.dev/guides/what-is-puppeteer)
 
 ### Imágenes
 
-Para las imágenes, al usar un correo de la UDP, los archivos tienen acceso restringido y el Apps Script no puede sacar las imágenes. Por lo tanto, Claude me recomendó usar <cloudinary.com> que es una plataforma de gestión de imágenes que ofrece una API para manipular y optimizar imágenes en la nube.
+#### Desde Drive a Cloudinary
+
+Para las imágenes, al usar un correo de la UDP, los archivos tienen acceso restringido y el Apps Script no puede sacar las imágenes. Por lo tanto, Claude me recomendó usar <https://cloudinary.com> que es una plataforma de gestión de imágenes que ofrece una API para manipular y optimizar imágenes en la nube.
+
+Cloud Name: dm9tdsix6
 
 Entonces el Apps Script envía las imágenes de Drive a Cloudinary, y desde ahí se pueden obtener los enlaces públicos para hacer las gráficas.
 
 Hice la cuenta con mi correo insitucional. Luego se puede cambiar a otro correo para que gestione eso.
 
-## Comentarios y recomendaciones
+#### Filtro de imágenes
+
+En Gemini hay una función que permite evaluar imágenes según criterios específicos: Gemini Vision. Se le pueden pasar varias imágenes y un prompt con los criterios que se quieren evaluar (colores, brillo, calidad, composición, etc). Gemini devuelve una puntuación para cada imagen y las ordena según esos criterios.
+
+Entonces, en vez de mostrar todas las imágenes a quien aprueba, se pueden filtrar y mostrar sólo las mejores candidatas.
+
+1. Apps Script descarga las N imágenes del autor desde Drive
+2. Llama a Gemini Vision con todas las imágenes + prompt evaluativo con tus criterios
+3. Gemini devuelve top 3-5 candidatas con razones
+4. Apps Script genera 3-5 portadas (una con cada candidata de fondo)
+5. El aprobador ve las 3-5 portadas en la Web App, elige una y reordena los slides
+
+## Preguntas, comentarios y recomendaciones
 
 ### 01
 
@@ -141,7 +149,17 @@ Hice la cuenta con mi correo insitucional. Luego se puede cambiar a otro correo 
 
 - Hay títulos demasiado largos. Propongo que se ponga un límite de caracteres para que no se rompa la composición.
 
+**Comentarios y recomendaciones**
+
+- No es un filtro de color, es un gradiante
+- Primero título ajustado a la visualidad de la imagen de fondo, luego un carrusel de fotos y al final el logo de la faaad
+- Es posible que se tenga que agregan un logo a extra a la última imagen junto al de la faaad
+- Ver diagramaciones de texto de instagram
+- Filtro de image: pueden haber 2 muy parecidas
+
 ## Enlaces
 
 - [linktree udp](https://linktr.ee/comunicaciones.disenoudp)
 - [forms con datos de proyectos](https://docs.google.com/forms/d/e/1FAIpQLSfvkAMkUHfUSpBAncOZ2KhZuPwKaHQy2pEJXSa1ISl-iL5amA/viewform)
+- [Cloudinary](https://cloudinary.com)
+- [Creador de COPYS RRSS udp](https://aistudio.google.com/apps/56cb9cef-959d-4bfe-b902-62c47a34039a?showPreview=true&showAssistant=true)

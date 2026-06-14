@@ -158,13 +158,13 @@ async function exportarSlide() {
         const slide = document.getElementById(`slide-${estado.slideActivo}`);
 
         const dataUrl = await htmlToImage.toPng(slide, {
-            width: 1080,
+            width: 1020,
             height: 1350,
             pixelRatio: 1,
             cacheBust: true,
             style: {
                 transform: 'none',
-                width: '1080px',
+                width: '1020px',
                 height: '1350px'
             }
         });
