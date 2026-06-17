@@ -120,6 +120,27 @@ function bindColorPicker() {
     });
 }
 
+// Picker de alineación del título
+const tituloSlide1 = document.querySelector('#slide-1 .titulo');
+const claseAlineacion = ['align-sup-izq', 'align-inf-der', 'align-sup-der'];
+
+document.querySelectorAll('.alineacion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Marcar botón activo
+        document.querySelectorAll('.alineacion-btn').forEach(b => b.classList.remove('activo'));
+        btn.classList.add('activo');
+
+        // Sacar cualquier clase de alineación previa
+        claseAlineacion.forEach(c => tituloSlide1.classList.remove(c));
+
+        // Si el botón tiene clase (no es el default), agregarla
+        const claseNueva = btn.dataset.align;
+        if (claseNueva) {
+            tituloSlide1.classList.add(claseNueva);
+        }
+    });
+});
+
 // ------------------------------------------
 // 5. NAVEGACIÓN ENTRE SLIDES
 // ------------------------------------------

@@ -59,6 +59,15 @@
         <section class="stage" id="stage-3">
             <h2>Tu selección</h2>
             <div class="preview-final-wrapper" id="preview-final"></div>
+            <div class="campo-alineacion">
+                <p class="alineacion-label">Alineación del título</p>
+                <div class="alineacion-picker">
+                    <button type="button" class="alineacion-btn activo" data-align="">Inf. izq.</button>
+                    <button type="button" class="alineacion-btn" data-align="align-sup-izq">Sup. izq.</button>
+                    <button type="button" class="alineacion-btn" data-align="align-inf-der">Inf. der.</button>
+                    <button type="button" class="alineacion-btn" data-align="align-sup-der">Sup. der.</button>
+                </div>
+            </div>
             <div class="acciones">
                 <button type="button" class="btn-accion" id="btn-volver-2">
                     ← Cambiar color
@@ -125,12 +134,10 @@
     ============================================= -->
     <div class="preview-overlay" id="preview-overlay">
         <div class="preview-content" id="preview-content">
-            <button type="button" class="btn-cerrar-preview"
-                id="btn-cerrar-preview" aria-label="Cerrar">×</button>
+            <button type="button" class="btn-cerrar-preview" id="btn-cerrar-preview" aria-label="Cerrar">×</button>
             <div class="preview-thumb-grande" id="preview-grande-content"></div>
             <div class="preview-label" id="preview-label">Opción</div>
-            <button type="button" class="btn-accion primario"
-                id="btn-seleccionar-preview">Seleccionar</button>
+            <button type="button" class="btn-accion primario" id="btn-seleccionar-preview">Seleccionar</button>
         </div>
     </div>
 

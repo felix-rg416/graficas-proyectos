@@ -239,6 +239,41 @@ body {
 }
 
 /* =============================================
+       ALINEACION PICKER (swatches institucionales)
+    ============================================= */
+.alineacion-picker {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 4px;
+}
+
+.alineacion-btn {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #aaa;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.alineacion-btn:hover:not(.activo) {
+    border-color: #666;
+    color: var(--color-blanco);
+}
+
+.alineacion-btn.activo {
+    background: var(--color-blanco);
+    color: var(--color-negro);
+    border-color: var(--color-blanco);
+}
+
+/* =============================================
        NAVEGACIÓN DE SLIDES
     ============================================= */
 .nav-slides {
@@ -333,7 +368,9 @@ body {
         linear-gradient(to bottom,
             rgba(0, 0, 0, 0.15) 0%,
             rgba(0, 0, 0, 0.55) 100%),
-        var(--overlay-color);
+        linear-gradient(to bottom,
+            transparent 0%,
+            var(--overlay-color) 100%);
 }
 
 /* Variantes de color overlay — paleta institucional FaAAD */
@@ -382,10 +419,31 @@ body {
     color: var(--color-blanco);
     flex: 1;
     display: flex;
-    align-items: flex-end;
+    /* align-items: flex-end; */
+    flex-direction: column;
+    justify-content: flex-end;
     padding-bottom: 32px;
     /* word-break: break-word; */
     overflow-wrap: break-word;
+}
+
+/* opciones de titulos */
+
+#slide-1 .titulo.align-sup-izq {
+    justify-content: flex-start;
+    padding-bottom: 0;
+    padding-top: 32px;
+}
+
+#slide-1 .titulo.align-inf-der {
+    text-align: right;
+}
+
+#slide-1 .titulo.align-sup-der {
+    justify-content: flex-start;
+    text-align: right;
+    padding-bottom: 0;
+    padding-top: 32px;
 }
 
 #slide-1 .participantes {

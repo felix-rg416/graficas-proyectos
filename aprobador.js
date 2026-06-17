@@ -187,6 +187,28 @@ function renderEtapa3() {
     document.getElementById('msg-confirmado').classList.add('oculto');
 }
 
+// Picker de alineación del título (etapa 3)
+const claseAlineacionApr = ['align-sup-izq', 'align-inf-der', 'align-sup-der'];
+
+document.querySelectorAll('.alineacion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Botón activo
+        document.querySelectorAll('.alineacion-btn').forEach(b => b.classList.remove('activo'));
+        btn.classList.add('activo');
+
+        // Aplicar al titulo del preview final
+        const tituloFinal = document.querySelector('.preview-final-wrapper .titulo');
+        if (!tituloFinal) return;
+
+        claseAlineacionApr.forEach(c => tituloFinal.classList.remove(c));
+
+        const claseNueva = btn.dataset.align;
+        if (claseNueva) {
+            tituloFinal.classList.add(claseNueva);
+        }
+    });
+});
+
 // =============================================
 // 9. NAVEGACIÓN ENTRE ETAPAS
 // =============================================

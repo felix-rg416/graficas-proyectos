@@ -120,6 +120,8 @@ Entonces, en vez de mostrar todas las imágenes a quien aprueba, se pueden filtr
 
 Para publicar en Instagram, se puede usar la API de Instagram Graph, pero tiene limitaciones y requiere una cuenta de empresa.
 
+Se necesita una cuenta de empresa de Instagram, que esté vinculada a una página de Facebook. Además, para usar la API de Instagram Graph, se necesita un código de acceso que se obtiene a través del proceso de autenticación de Facebook.
+
 ## Preguntas, comentarios y recomendaciones
 
 ### 01
@@ -163,7 +165,8 @@ Para publicar en Instagram, se puede usar la API de Instagram Graph, pero tiene 
 
 ### 03
 
-Para poder subir a instagram se necesita una cuenta de empresa, y esa cuenta tiene que estar vinculada a una página de Facebook. Además, para usar la API de Instagram Graph, se necesita un token de acceso que se obtiene a través del proceso de autenticación de Facebook.
+Para poder subir a instagram se necesita una cuenta de empresa, y esa cuenta tiene que estar vinculada a una página de Facebook. Además, para usar la API de Instagram Graph, se necesita un codigo de acceso que se obtiene a través del proceso de autenticación de Facebook.
+
 
 ## Enlaces
 
