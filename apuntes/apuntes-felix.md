@@ -116,6 +116,10 @@ Entonces, en vez de mostrar todas las imágenes a quien aprueba, se pueden filtr
 4. Apps Script genera 3-5 portadas (una con cada candidata de fondo)
 5. El aprobador ve las 3-5 portadas en la Web App, elige una y reordena los slides
 
+### Publicación en Instagram
+
+Para publicar en Instagram, se puede usar la API de Instagram Graph, pero tiene limitaciones y requiere una cuenta de empresa.
+
 ## Preguntas, comentarios y recomendaciones
 
 ### 01
@@ -156,6 +160,10 @@ Entonces, en vez de mostrar todas las imágenes a quien aprueba, se pueden filtr
 - Es posible que se tenga que agregan un logo a extra a la última imagen junto al de la faaad
 - Ver diagramaciones de texto de instagram
 - Filtro de image: pueden haber 2 muy parecidas
+
+### 03
+
+Para poder subir a instagram se necesita una cuenta de empresa, y esa cuenta tiene que estar vinculada a una página de Facebook. Además, para usar la API de Instagram Graph, se necesita un token de acceso que se obtiene a través del proceso de autenticación de Facebook.
 
 ## Enlaces
 
