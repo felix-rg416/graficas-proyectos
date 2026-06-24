@@ -22,6 +22,7 @@ Herramienta de automatización de gráficas para proyectos.
     - [Imágenes](#imágenes)
         - [Desde Drive a Cloudinary](#desde-drive-a-cloudinary)
         - [Filtro de imágenes](#filtro-de-imágenes)
+- [Problemas y soluciones](#problemas-y-soluciones)
 - [Preguntas, comentarios y recomendaciones](#preguntas-comentarios-y-recomendaciones)
     - [01](#01)
     - [02](#02)
@@ -121,6 +122,23 @@ Entonces, en vez de mostrar todas las imágenes a quien aprueba, se pueden filtr
 Para publicar en Instagram, se puede usar la API de Instagram Graph, pero tiene limitaciones y requiere una cuenta de empresa.
 
 Se necesita una cuenta de empresa de Instagram, que esté vinculada a una página de Facebook. Además, para usar la API de Instagram Graph, se necesita un código de acceso que se obtiene a través del proceso de autenticación de Facebook.
+
+## Problemas y soluciones
+
+### ERROR: configurar EMAIL_APROBADOR en CONFIG antes de ejecutar
+
+El correo de `CONFIG` se compara con un ejemplo en `function procesarPendientes()`
+
+Me dio ese error porque el correo se comparaba con el mismo que ya está:
+
+```js
+EMAIL_APROBADOR: 'felix.rodriguez@mail.udp.cl',
+
+function procesarPendientes() {
+if (CONFIG.EMAIL_APROBADOR === 'felix.rodriguez@mail.udp.cl') // < AQUI
+```
+
+La solución es cambiar el correo de `function procesarPendientes()` por `TU_EMAIL@example.com`
 
 ## Preguntas, comentarios y recomendaciones
 
