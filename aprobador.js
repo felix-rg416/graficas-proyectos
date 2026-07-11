@@ -5,6 +5,7 @@
 //                  &escuela=...&img1=...&img2=...&img3=...
 // =============================================
 const params = new URLSearchParams(window.location.search);
+const captionRaw = params.get('caption') || '';
 
 const proyecto = {
     tipo: params.get('tipo') || 'EXPOSICIÓN',
@@ -358,6 +359,31 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('.candidato-card')) return;
     hidePreview();
 });
+
+// Poblar y manejar el caption en la etapa 3
+const captionTextarea = document.getElementById('caption-textarea');
+const btnCopiarCaption = document.getElementById('btn-copiar-caption');
+
+if (captionTextarea) {
+    captionTextarea.value = captionRaw;
+}
+
+if (btnCopiarCaption) {
+    btnCopiarCaption.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(captionTextarea.value);
+            btnCopiarCaption.textContent = 'Copiado ✓';
+            btnCopiarCaption.classList.add('copiado');
+            setTimeout(() => {
+                btnCopiarCaption.textContent = 'Copiar caption';
+                btnCopiarCaption.classList.remove('copiado');
+            }, 2000);
+        } catch (err) {
+            console.error('Error copiando caption:', err);
+            alert('No se pudo copiar. Seleccioná el texto manualmente.');
+        }
+    });
+}
 
 // =============================================
 // INIT
