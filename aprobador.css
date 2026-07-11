@@ -612,6 +612,48 @@ body.aprobador {
 }
 
 /* =============================================
+   TEMPLATE ESCONDIDO PARA EXPORTAR EL SLIDE FINAL
+   Vive offscreen; se renderiza a PNG cuando se exporta
+   ============================================= */
+.export-templates {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    pointer-events: none;
+}
+
+.export-logo-slide {
+    width: 1020px;
+    height: 1350px;
+    background: var(--color-negro);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    color: var(--color-blanco);
+}
+
+.export-logo-lockup {
+    font-family: var(--font-display);
+    font-size: 180px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+
+.export-logo-lockup span {
+    font-weight: 700;
+}
+
+.export-logo-escuela {
+    font-family: var(--font-body);
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+/* =============================================
    RESPONSIVE — celulares
    ============================================= */
 @media (max-width: 600px) {
