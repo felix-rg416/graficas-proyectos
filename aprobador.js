@@ -260,202 +260,42 @@ document.getElementById('btn-confirmar').addEventListener('click', () => {
     // });
 });
 
-// // =============================================
-// // 11. EXPORTAR PNG de la selección final
-// // =============================================
-// document.getElementById('btn-exportar-final').addEventListener('click', async () => {
-//     const btn = document.getElementById('btn-exportar-final');
-//     btn.disabled = true;
-
-//     try {
-//         await document.fonts.ready;
-
-//         const thumb = document.querySelector('#preview-final .cover-thumb');
-
-//         const dataUrl = await htmlToImage.toPng(thumb, {
-//             width: 1020,
-//             height: 1350,
-//             pixelRatio: 1,
-//             cacheBust: true,
-//             style: {
-//                 transform: 'none',
-//                 width: '1020px',
-//                 height: '1350px'
-//             }
-//         });
-
-//         const link = document.createElement('a');
-//         link.download = `portada-aprobada.png`;
-//         link.href = dataUrl;
-//         link.click();
-//     } catch (error) {
-//         console.error('Error al exportar PNG:', error);
-//         alert('Error al exportar PNG. Revisá la consola del navegador.');
-//     } finally {
-//         btn.disabled = false;
-//     }
-// });
-
-// =====================================================
-// EXPORTAR CARRUSEL COMPLETO
-// Descarga secuencialmente: cover + todas las imágenes + logo final
-// =====================================================
-
-function esperar(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function slugify(texto) {
-    return texto
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '')
-        .substring(0, 30) || 'proyecto';
-}
-
-function obtenerIndiceCover() {
-    const activo = document.querySelector('.candidato-card.activo');
-    if (!activo) return 0;
-    const todas = Array.from(document.querySelectorAll('.candidato-card'));
-    return Math.max(0, todas.indexOf(activo));
-}
-
-async function descargarCoverConTitulo(nombreArchivo) {
-    const nodo = document.querySelector('.preview-final-wrapper .cover-thumb');
-    if (!nodo) throw new Error('No se encontró .cover-thumb');
-
-    await document.fonts.ready;
-
-    const dataUrl = await htmlToImage.toPng(nodo, {
-        width: 1020,
-        height: 1350,
-        pixelRatio: 1,
-        cacheBust: true,
-        style: {
-            transform: 'scale(1)',
-            transformOrigin: 'top left'
-        }
-    });
-
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = nombreArchivo;
-    link.click();
-}
-
-async function descargarImagenRaw(urlCloudinary, nombreArchivo) {
-    // Pedimos a Cloudinary la imagen ya recortada a 1020x1350 en PNG.
-    // c_fill = fill con crop, g_auto = gravedad automática (elige el mejor recorte)
-    const urlPng = urlCloudinary.replace(
-        '/image/upload/',
-        '/image/upload/w_1020,h_1350,c_fill,g_auto,f_png/'
-    );
-
-    const response = await fetch(urlPng);
-    if (!response.ok) throw new Error('No se pudo bajar la imagen: ' + urlPng);
-
-    const blob = await response.blob();
-    const objectUrl = URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = objectUrl;
-    link.download = nombreArchivo;
-    link.click();
-
-    setTimeout(() => URL.revokeObjectURL(objectUrl), 1500);
-}
-
-async function descargarSlideLogo(nombreArchivo) {
-    const nodo = document.getElementById('export-logo-slide');
-    if (!nodo) throw new Error('No se encontró el template del slide final');
-
-    await document.fonts.ready;
-
-    const dataUrl = await htmlToImage.toPng(nodo, {
-        width: 1020,
-        height: 1350,
-        pixelRatio: 1,
-        cacheBust: true
-    });
-
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = nombreArchivo;
-    link.click();
-}
-
-async function exportarCarruselCompleto() {
+// =============================================
+// 11. EXPORTAR PNG de la selección final
+// =============================================
+document.getElementById('btn-exportar-final').addEventListener('click', async () => {
     const btn = document.getElementById('btn-exportar-final');
-    if (!btn) return;
-
-    const textoOriginal = btn.textContent;
     btn.disabled = true;
 
     try {
-        const titulo = params.get('titulo') || 'proyecto';
-        const prefijo = slugify(titulo);
+        await document.fonts.ready;
 
-        // Recolectar URLs de imágenes del URL
-        const imgs = [];
-        let i = 1;
-        while (params.get('img' + i)) {
-            imgs.push(params.get('img' + i));
-            i++;
-        }
+        const thumb = document.querySelector('#preview-final .cover-thumb');
 
-        if (imgs.length === 0) {
-            alert('No hay imágenes para exportar.');
-            btn.textContent = textoOriginal;
-            btn.disabled = false;
-            return;
-        }
+        const dataUrl = await htmlToImage.toPng(thumb, {
+            width: 1020,
+            height: 1350,
+            pixelRatio: 1,
+            cacheBust: true,
+            style: {
+                transform: 'none',
+                width: '1020px',
+                height: '1350px'
+            }
+        });
 
-        const coverIdx = obtenerIndiceCover();
-        const coverUrl = imgs[coverIdx];
-        const otras = imgs.filter((_, idx) => idx !== coverIdx);
-
-        const pad = n => String(n).padStart(2, '0');
-        let contador = 1;
-
-        // 1. Cover con título
-        btn.textContent = `Descargando ${contador}...`;
-        await descargarCoverConTitulo(`${pad(contador)}_${prefijo}_portada.png`);
-        contador++;
-        await esperar(400);
-
-        // 2. Imagen de la portada (raw, sin overlay ni título)
-        btn.textContent = `Descargando ${contador}...`;
-        await descargarImagenRaw(coverUrl, `${pad(contador)}_${prefijo}_imagen.png`);
-        contador++;
-        await esperar(400);
-
-        // 3. Resto de imágenes en orden de Drive
-        for (const url of otras) {
-            btn.textContent = `Descargando ${contador}...`;
-            await descargarImagenRaw(url, `${pad(contador)}_${prefijo}_imagen.png`);
-            contador++;
-            await esperar(400);
-        }
-
-        // 4. Slide final con logo
-        btn.textContent = `Descargando ${contador}...`;
-        await descargarSlideLogo(`${pad(contador)}_${prefijo}_final.png`);
-
-        btn.textContent = '✓ Descargado';
-        setTimeout(() => {
-            btn.textContent = textoOriginal;
-            btn.disabled = false;
-        }, 2500);
-
-    } catch (err) {
-        console.error('Error exportando:', err);
-        alert('Hubo un error al exportar el carrusel. Revisá la consola para detalles.');
-        btn.textContent = textoOriginal;
+        const link = document.createElement('a');
+        link.download = `portada-aprobada.png`;
+        link.href = dataUrl;
+        link.click();
+    } catch (error) {
+        console.error('Error al exportar PNG:', error);
+        alert('Error al exportar PNG. Revisá la consola del navegador.');
+    } finally {
         btn.disabled = false;
     }
-}
+});
+
 
 // Registro del listener (reemplazá el que tengas actualmente)
 document.getElementById('btn-exportar-final').addEventListener('click', exportarCarruselCompleto);
