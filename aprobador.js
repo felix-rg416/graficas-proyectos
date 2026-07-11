@@ -387,7 +387,7 @@ async function descargarSlideLogo(nombreArchivo) {
 }
 
 async function exportarCarruselCompleto() {
-    const btn = document.getElementById('btn-exportar');
+    const btn = document.getElementById('btn-exportar-final');
     if (!btn) return;
 
     const textoOriginal = btn.textContent;
@@ -458,7 +458,7 @@ async function exportarCarruselCompleto() {
 }
 
 // Registro del listener (reemplazá el que tengas actualmente)
-document.getElementById('btn-exportar').addEventListener('click', exportarCarruselCompleto);
+document.getElementById('btn-exportar-final').addEventListener('click', exportarCarruselCompleto);
 
 // =============================================
 // 12. PREVIEW OVERLAY — show / hide / select
