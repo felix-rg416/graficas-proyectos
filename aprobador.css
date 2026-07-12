@@ -639,6 +639,12 @@ body.aprobador {
     width: 480px;
     height: auto;
     display: block;
+    fill: var(--color-blanco);
+    color: var(--color-blanco);
+}
+
+.export-logo-img * {
+    fill: var(--color-blanco) !important;
 }
 
 /* =============================================
