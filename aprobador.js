@@ -373,7 +373,7 @@ async function descargarSlideLogo(nombreArchivo) {
 
     await document.fonts.ready;
 
-    // Precargar la imagen del logo para asegurar que esté lista
+    // Precargar la imagen del logo antes de renderizar
     const imgLogo = nodo.querySelector('.export-logo-img');
     if (imgLogo && !imgLogo.complete) {
         await new Promise((resolve, reject) => {
