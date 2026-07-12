@@ -373,6 +373,15 @@ async function descargarSlideLogo(nombreArchivo) {
 
     await document.fonts.ready;
 
+    // Precargar la imagen del logo para asegurar que esté lista
+    const imgLogo = nodo.querySelector('.export-logo-img');
+    if (imgLogo && !imgLogo.complete) {
+        await new Promise((resolve, reject) => {
+            imgLogo.addEventListener('load', resolve, { once: true });
+            imgLogo.addEventListener('error', reject, { once: true });
+        });
+    }
+
     const dataUrl = await htmlToImage.toPng(nodo, {
         width: 1020,
         height: 1350,
